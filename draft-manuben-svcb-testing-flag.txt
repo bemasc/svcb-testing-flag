@@ -88,8 +88,8 @@ Table of Contents
    against an active attacker, so it is generally not allowed.  Instead,
    if the feature does not work as expected, the client will "fail
    closed".  This behavior can make it challenging to deploy these
-   features, as the initial public deployment can create an outage if it
-   is misconfigured.
+   features, as the initial public deployment can create an outage if
+   the service is misconfigured.
 
    This document defines a new SVCB SvcParam to help service operators
    offer new security features.  By marking these features as still
