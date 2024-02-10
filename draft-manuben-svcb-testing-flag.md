@@ -51,7 +51,7 @@ This document defines a new SVCB SvcParam to help service operators offer new se
 
 The "testing" flag is a SvcParamKey that always has an empty value in presentation and wire format.  When present, this flag indicates that this ServiceMode record is subject to outages, and clients SHOULD NOT interpret connection failures as evidence of an active attack.
 
-Service owners SHOULD ensure that this flag is mandatory, either explicitly (by adding `mandatory=testing`) or implicitly if this parameter is automatically mandatory for the protocol mapping.  Future protocol mappings SHOULD make this SvcParam "automatically mandatory".
+Service owners SHOULD ensure that this flag is mandatory, either explicitly (by adding `mandatory=testing` to the SvcParams) or implicitly if this parameter is "automatically mandatory" for the protocol mapping.  Future protocol mappings SHOULD make this SvcParam "automatically mandatory".
 
 ## Interaction with SvcPriority
 
@@ -65,7 +65,7 @@ Consider the case of a plaintext DNS server operator at "dns.example.com" who wo
 _dns.dns.example.com. SVCB 1 . alpn=dot
 ~~~
 
-Clients following {{?RFC9461}} would retrieve this record, observe that DNS over TLS is available, and attempt to use it on TCP port 853.  If the TLS session cannot be established for any reason, a compliant client will not fall back to plaintext DNS on UDP port 53, because the failure could indicate an active attack ({{?RFC9461, Section 8.2}}).  This could be cause for concern, if the operator of "dns.example.com" does not have operational confidence in their DNS over TLS service.
+Clients following {{?RFC9461}} would retrieve this record, observe that DNS over TLS is available, and attempt to use it on TCP port 853.  If the TLS session cannot be established for any reason, a compliant client will not fall back to plaintext DNS on UDP port 53, because the failure could indicate an active attack ({{?RFC9461, Section 8.2}}).  If the operator of "dns.example.com" does not have operational confidence in their DNS over TLS service, this failure mode could raise concerns about the potential consequences of offering this new service.
 
 To reduce the risk associated with this new service, the operator could instead use the new "testing" flag as follows:
 
@@ -73,7 +73,7 @@ To reduce the risk associated with this new service, the operator could instead 
 _dns.dns.example.com. SVCB 1 . alpn=dot testing mandatory=testing
 ~~~
 
-Clients that do not implement this specification will ignore the record due to its use of an unrecognized mandatory SvcParam, and continue to use plaintext DNS.  Clients that respect the "testing" flag will attempt to use DNS over TLS, but they will fall back to plaintext DNS if TLS is not working correctly.
+Clients that do not implement this specification will ignore the record because it specifies an unrecognized mandatory SvcParam.  They will continue to use plaintext DNS.  Clients that respect the "testing" flag will attempt to use DNS over TLS, but they will fall back to plaintext DNS if DNS over TLS is non-functional.
 
 # Security Considerations
 
@@ -83,9 +83,9 @@ Use of the "testing" flag explicitly disables SVCB's defense against active atta
 
 IANA is requested to add this entry to the SVCB SvcParams Registry:
 
-| Number | Name    | Change Controller | Reference       |
-| ------ | ------- | ----------------- | --------------- |
-| TBD    | testing | IETF              | (This document) |
+| Number | Name    | Meaning                    | Change Controller | Reference       |
+| ------ | ------- | -------------------------- | ----------------- |
+| TBD    | testing | Record may not be reliable | IETF              | (This document) |
 
 --- back
 
