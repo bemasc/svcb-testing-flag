@@ -9,10 +9,10 @@ number:
 date:
 consensus: true
 v: 3
-area: Operations
-workgroup: DNSOP
+# area: Operations
+# workgroup: DNSOP
 venue:
-  github: bemasc/svcb-testing-flag
+  github: "bemasc/svcb-testing-flag"
 
 author:
  -
