@@ -37,9 +37,9 @@ This draft defines a flag to mark a service endpoint as being potentially unreli
 
 # Introduction
 
-The Service Binding (SVCB) DNS record type {{!RFC9460}}, and SVCB-compatible types like HTTPS, convey a collection of endpoints that can provide a service, along with metadata about each of those endpoints.  This metadata can include enumerating protocol features that are available and supported on those endpoints.
+The Service Binding (SVCB) DNS record type {{!RFC9460}}, and SVCB-compatible types like HTTPS, convey a collection of endpoints that can provide a service, along with metadata about each of those endpoints.  This metadata can indicate protocol features that are available and supported on those endpoints.
 
-In most cases, advertising new features is unlikely to render the service unavailable, because clients will fall back to other SVCB records or other connection modes.  However, for security-enhancing features, this fallback behavior would create a loss of security against an active attacker, so it is generally not allowed.  Instead, if the feature does not work as expected, the client will "fail closed".  This behavior can make it challenging to deploy these features, as the initial public deployment can create an outage if the service is misconfigured.
+In most cases, advertising new features is unlikely to render the service unavailable.  Clients that are unaware of these features will ignore them, and clients that are aware will fall back to other SVCB records or other connection modes if the feature doesn't work.  However, for security-enhancing features, this fallback behavior would create a loss of security against an active attacker, so it is generally not allowed.  Instead, if the feature does not work as expected, the client will "fail closed".  This behavior can make it challenging to deploy security-enhancing features, as the initial public deployment can create an outage if the service is misconfigured.
 
 This document defines a new SVCB SvcParam to help service operators offer new security features.  By marking these features as still being tested, the operator advises the client to interpret problems as an accidental failure by the operator, not a malicious action by an active attacker.
 
@@ -49,7 +49,7 @@ This document defines a new SVCB SvcParam to help service operators offer new se
 
 # Specification
 
-The "testing" flag is a SvcParamKey that always has an empty value in presentation and wire format.  When present, this flag indicates that this ServiceMode record is subject to outages, and clients SHOULD NOT interpret connection failures as evidence of an active attack.
+The "testing" flag is a SvcParam that always has an empty value in presentation and wire format.  When present, this flag indicates that this ServiceMode record is subject to outages, and clients SHOULD NOT interpret connection failures as evidence of an active attack.
 
 Service owners SHOULD ensure that this flag is mandatory, either explicitly (by adding `mandatory=testing` to the SvcParams) or implicitly if this parameter is "automatically mandatory" for the protocol mapping.  Future protocol mappings SHOULD make this SvcParam "automatically mandatory".
 
@@ -84,8 +84,8 @@ Use of the "testing" flag explicitly disables SVCB's defense against active atta
 IANA is requested to add this entry to the SVCB SvcParams Registry:
 
 | Number | Name    | Meaning                    | Change Controller | Reference       |
-| ------ | ------- | -------------------------- | ----------------- |
-| TBD    | testing | Record may not be reliable | IETF              | (This document) |
+| ------ | ------- | -------------------------- | ----------------- | --------------- |
+| TBD    | testing | Endpoint may be unreliable | IETF              | (This document) |
 
 --- back
 
