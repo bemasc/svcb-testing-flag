@@ -1029,7 +1029,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwartz &amp; Bretelle</td>
-<td class="center">Expires 13 August 2024</td>
+<td class="center">Expires 15 August 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1042,12 +1042,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-manuben-svcb-testing-flag-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-02-10" class="published">10 February 2024</time>
+<time datetime="2024-02-12" class="published">12 February 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-08-13">13 August 2024</time></dd>
+<dd class="expires"><time datetime="2024-08-15">15 August 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1095,7 +1095,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 13 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 15 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1173,8 +1173,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">The Service Binding (SVCB) DNS record type <span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span>, and SVCB-compatible types like HTTPS, convey a collection of endpoints that can provide a service, along with metadata about each of those endpoints.  This metadata can include enumerating protocol features that are available and supported on those endpoints.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">In most cases, advertising new features is unlikely to render the service unavailable, because clients will fall back to other SVCB records or other connection modes.  However, for security-enhancing features, this fallback behavior would create a loss of security against an active attacker, so it is generally not allowed.  Instead, if the feature does not work as expected, the client will "fail closed".  This behavior can make it challenging to deploy these features, as the initial public deployment can create an outage if the service is misconfigured.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-1">The Service Binding (SVCB) DNS record type <span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span>, and SVCB-compatible types like HTTPS, convey a collection of endpoints that can provide a service, along with metadata about each of those endpoints.  This metadata can indicate protocol features that are available and supported on those endpoints.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">In most cases, advertising new features is unlikely to render the service unavailable.  Clients that are unaware of these features will ignore them, and clients that are aware will fall back to other SVCB records or other connection modes if the feature doesn't work.  However, for security-enhancing features, this fallback behavior would create a loss of security against an active attacker, so it is generally not allowed.  Instead, if the feature does not work as expected, the client will "fail closed".  This behavior can make it challenging to deploy security-enhancing features, as the initial public deployment can create an outage if the service is misconfigured.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This document defines a new SVCB SvcParam to help service operators offer new security features.  By marking these features as still being tested, the operator advises the client to interpret problems as an accidental failure by the operator, not a malicious action by an active attacker.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1194,7 +1194,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-specification">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-specification" class="section-name selfRef">Specification</a>
       </h2>
-<p id="section-3-1">The "testing" flag is a SvcParamKey that always has an empty value in presentation and wire format.  When present, this flag indicates that this ServiceMode record is subject to outages, and clients <span class="bcp14">SHOULD NOT</span> interpret connection failures as evidence of an active attack.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">The "testing" flag is a SvcParam that always has an empty value in presentation and wire format.  When present, this flag indicates that this ServiceMode record is subject to outages, and clients <span class="bcp14">SHOULD NOT</span> interpret connection failures as evidence of an active attack.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">Service owners <span class="bcp14">SHOULD</span> ensure that this flag is mandatory, either explicitly (by adding <code>mandatory=testing</code> to the SvcParams) or implicitly if this parameter is "automatically mandatory" for the protocol mapping.  Future protocol mappings <span class="bcp14">SHOULD</span> make this SvcParam "automatically mandatory".<a href="#section-3-2" class="pilcrow">¶</a></p>
 <div id="interaction-with-svcpriority">
 <section id="section-3.1">
@@ -1256,7 +1256,7 @@ _dns.dns.example.com. SVCB 1 . alpn=dot testing mandatory=testing
           <tr>
             <td class="text-left" rowspan="1" colspan="1">TBD</td>
             <td class="text-left" rowspan="1" colspan="1">testing</td>
-            <td class="text-left" rowspan="1" colspan="1">Record may not be reliable</td>
+            <td class="text-left" rowspan="1" colspan="1">Endpoint may be unreliable</td>
             <td class="text-left" rowspan="1" colspan="1">IETF</td>
             <td class="text-left" rowspan="1" colspan="1">(This document)</td>
           </tr>
